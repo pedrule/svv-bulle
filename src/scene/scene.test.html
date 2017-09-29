@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Scene test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- <link rel="import" href="../svv-bulle.html"> -->
+    <script type="module" src="../../dist/main.bundle.js"></script>
+</head>
+<body>
+
+<test-fixture id="BasicTestFixture">
+    <template>
+        <scene-base></scene-base>
+    </template>
+</test-fixture>
+
+<test-fixture id="Basic">
+    <template>
+        <scene-base></scene-base>
+    </template>
+</test-fixture>
+
+<script>
+
+    suite('scene-base initialisation', ()=> {
+        let element, elementShadowRoot;
+        setup(()=> {
+            element = fixture('BasicTestFixture');
+            elementShadowRoot = element.shadowRoot;
+        });
+        test('element has a scene property  defined', ()=> {
+            expect(element.scene).to.be.ok;
+        });
+    });
+
+    suite('the panoama component', ()=>{
+        let flag, element2;
+        setup(()=>{
+            flag=false;
+            stub('scene-base', {
+                _addBulleToScene: ()=> {
+                    flag = true;
+                }
+            })
+            element2 = fixture('Basic');
+        });
+
+        test('the panorama element should be add to the scene element',()=> {
+            expect(flag).to.be.true;
+
+        })
+    })
+
+
+</script>
+
+</body>
+</html>

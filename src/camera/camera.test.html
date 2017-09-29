@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Camera test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- <link rel="import" href="../svv-bulle.html"> -->
+    <script type="module" src="../../dist/main.bundle.js"></script>
+</head>
+<body>
+
+<test-fixture id="BasicTestFixture">
+    <template>
+        <camera-base height="55" width="66"></camera-base>
+    </template>
+</test-fixture>
+
+<test-fixture id="Basic">
+    <template>
+        <camera-base></camera-base>
+    </template>
+</test-fixture>
+
+<script>
+    let element, elementShadowRoot;
+    setup(()=> {
+        element = fixture('BasicTestFixture');
+        elementShadowRoot = element.shadowRoot;
+    });
+    suite('camera-base initialisation', function() {
+
+        test('element has a camera property  defined', function() {
+            expect(element.camera).to.be.ok;
+        });
+
+        test('element has a width and height properties  defined', function() {
+            expect(element.height).to.equal(55);
+            expect(element.width).to.equal(66);
+        });
+
+        test('when camera property is setted, it fire an event', (done)=>{
+            let basic = fixture('Basic');
+            basic.addEventListener('camera-changed', ()=>{
+                expect(true).to.be.true;
+                done()
+            });
+            basic.height=55;
+            basic.width=55;
+        })
+    });
+
+
+</script>
+
+</body>
+</html>

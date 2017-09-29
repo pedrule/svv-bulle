@@ -1,0 +1,28 @@
+{
+  "name": "svv-bulle",
+  "private": true,
+  "description": "Container for a new version of virtual tour",
+  "main": "svv-bulle.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.1.0",
+    "google-streetview-pano": "GoogleWebComponents/google-streetview-pano#^1.0.4",
+    "sinon": "^3.3.0",
+    "sinonjs": "^1.17.1",
+    "google-apis": "GoogleWebComponents/google-apis#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "Polymer/polymer#^2.1.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

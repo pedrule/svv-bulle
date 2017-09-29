@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Renderer test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <script type="module" src="../../dist/main.bundle.js"></script>
+</head>
+<body>
+
+<test-fixture id="BasicTestFixture">
+    <template>
+        <renderer-base height="55" width="77"></renderer-base>
+    </template>
+</test-fixture>
+<canvas id="canvas"></canvas>
+
+<test-fixture id="basic">
+    <template>
+        <renderer-base></renderer-base>
+    </template>
+</test-fixture>
+<script>
+
+    suite(' Renderer base initalisation element', () => {
+        let element;
+        setup(()=> {
+            element = fixture('BasicTestFixture');
+            let canvas = document.querySelector('#canvas');
+            element.canvas = canvas;
+        });
+        suite('renderer-base initialisation', function() {
+            test('element has a renderer property  defined', function() {
+                expect(element._renderer).to.be.ok;
+            });
+        });
+
+        suite('height and width properties', function() {
+
+            test('must be defined in initialization', function() {
+                expect(element.height).to.equal(55);
+                expect(element.width).to.equal(77);
+            });
+
+            test('if change, the webgl renderer must re-render the change', function() {
+                let spy = sinon.spy(element, '_updateSize');
+                expect(spy.called).to.be.false;
+                element.height = 66;
+                expect(spy.called).to.be.true;
+            });
+
+            test('the camera element must have the same width and height properties bound', function() {
+
+            });
+
+        });
+    });
+
+    suite('When scene and camera are ready, renderer can render', ()=>{
+        let elementBasic, spy;
+        setup(()=> {
+            elementBasic = fixture('basic');
+            spy = sinon.spy(elementBasic, '_render');
+        });
+
+        test('the _render is not called without event from camera', ()=>{
+            expect(spy.called).to.be.false;
+        })
+
+        test('when event is fired from camera, render is called', ()=>{
+            expect(spy.called).to.be.false;
+            elementBasic.height = 55;
+            elementBasic.width = 55;
+            expect(spy.called).to.be.true;
+        })
+    })
+
+
+
+</script>
+
+</body>
+</html>

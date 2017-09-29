@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>svv-bulle test</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- <link rel="import" href="../svv-bulle.html"> -->
+    <script type="module" src="../dist/main.bundle.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <svv-bulle></svv-bulle>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="HeightWidthTestFixture">
+      <template>
+        <svv-bulle height="55" width="66"></svv-bulle>
+      </template>
+    </test-fixture>
+
+    <script>
+      let element, elementShadowRoot, elementHeightWidth;
+      setup(()=> {
+          element = fixture('BasicTestFixture');
+          elementHeightWidth = fixture('HeightWidthTestFixture');
+          elementShadowRoot = element.shadowRoot;
+      });
+      suite('svv-bulle', function() {
+
+
+          test('element has a canvas element in shadowRoot', function() {
+            expect(element.$.paint).to.be.ok;
+          });
+
+          test('element has a panoID property', ()=> {
+              expect(element.panoID).to.be.ok;
+          })
+      });
+
+      suite('The canvas element', () => {
+          test('it should be in a full screen', () => {
+              expect(element.$.paint.style.height).to.equal(window.innerHeight+'px')
+              expect(element.$.paint.style.width).to.equal(window.innerWidth+'px')
+          });
+
+          test('it should have a property canvas referencing the canvas tag', () => {
+              expect(element.canvas).to.equal(element.$.paint);
+          })
+      });
+
+      suite('Height and width property', () => {
+          test('element has properties height and width', () => {
+              expect(element.width).to.be.ok;
+              expect(element.height).to.be.ok;
+          });
+
+          test('if undefined, the properties must be heigth and width of the window', () => {
+              expect(element.height).to.equal(window.innerHeight);
+              expect(element.width).to.equal(window.innerWidth);
+          });
+
+          test('if defined, properties must update accordingly', () => {
+              expect(elementHeightWidth.height).to.equal(55);
+              expect(elementHeightWidth.width).to.equal(66);
+          });
+
+          test('height and with are propagated to renderer element', () => {
+              let render = elementHeightWidth.shadowRoot.querySelector('renderer-base');
+              expect(render.height).to.equal(55);
+              expect(render.width).to.equal(66);
+          });
+
+          test('if height and with change height and width must changed on renderer element', () => {
+              expect(element.shadowRoot.querySelector('renderer-base').height).to.equal(window.innerHeight);
+              expect(element.shadowRoot.querySelector('renderer-base').width).to.equal(window.innerWidth);
+              element.height = element.width = 33;
+              expect(element.shadowRoot.querySelector('renderer-base').height).to.equal(33);
+              expect(element.shadowRoot.querySelector('renderer-base').width).to.equal(33);
+          });
+      });
+
+      suite('The Base renderer element', () => {
+          test('it should be defined and only one instance', () => {
+              let renderers = elementShadowRoot.querySelectorAll("renderer-base");
+              expect(renderers.length).to.equal(1);
+              expect(renderers[0]).toBeDefined;
+          })
+      });
+
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Camera test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- <link rel="import" href="../svv-bulle.html"> -->
+    <script type="module" src="../../dist/main.bundle.js"></script>
+</head>
+<body>
+
+
+<test-fixture id="Basic">
+    <template>
+        <panorama-google></panorama-google>
+    </template>
+</test-fixture>
+
+<script>
+    let element, elementShadowRoot;
+    setup(()=> {
+        element = fixture('Basic');
+        elementShadowRoot = element.shadowRoot;
+    });
+    suite('panorama-google initialisation', function() {
+        test('should have a script of google api which run in constructor',()=>{
+            expect(true).toEqual(true);
+        })
+        test('should have a an event fired when the api is loaded')
+        test('should display a panorama when setted the panoID ')
+    });
+
+
+</script>
+
+</body>
+</html>

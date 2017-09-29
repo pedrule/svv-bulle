@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="svv-bulle">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `svv-bulle`
+     * Container for a new version of virtual tour
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SvvBulle extends Polymer.Element {
+      static get is() { return 'svv-bulle'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'svv-bulle'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SvvBulle.is, SvvBulle);
+  </script>
+</dom-module>
